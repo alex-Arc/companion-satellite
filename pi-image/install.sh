@@ -42,11 +42,11 @@ git config --global pull.rebase false
 systemctl enable satellite
 
 # copy config file into place
-cp ./pi-image/satellite-config /boot/satellite-config
+cp ./pi-image/satellite-config /etc/satellite-config
 
 # add the fnm node to this users path
 # TODO - verify permissions
 echo "export PATH=/opt/fnm/aliases/default/bin:\$PATH" >> /home/satellite/.bashrc
 
 echo "Companion Satellite is installed!"
-echo "You should edit the configuration file at \"/boot/satellite-config\" then can start it with \"sudo systemctl start satellite\" or \"sudo satellite-update\""
+echo "You should edit the configuration file at \"/etc/satellite-config\" then can start it with \"sudo systemctl start satellite\" or \"sudo satellite-update\""

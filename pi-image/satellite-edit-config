@@ -9,7 +9,7 @@ fi
 systemctl stop satellite
 
 # open config editor
-nano /boot/satellite-config
+nano /etc/satellite-config
 
 # restart satellite
 # reboot
