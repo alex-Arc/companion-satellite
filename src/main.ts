@@ -5,6 +5,7 @@ import { DeviceManager } from './devices'
 import { DEFAULT_PORT } from './lib'
 
 import { RestServer } from './rest'
+import { OscServer } from './osc'
 import * as fs from 'fs/promises'
 
 const cli = meow(
@@ -44,6 +45,7 @@ console.log('Starting')
 const client = new CompanionSatelliteClient({ debug: true })
 const devices = new DeviceManager(client)
 const server = new RestServer(client, devices)
+const osc = new OscServer(client, devices)
 
 client.on('log', (l) => console.log(l))
 client.on('error', (e) => console.error(e))
@@ -63,12 +65,14 @@ exitHook(() => {
 	client.disconnect()
 	devices.close().catch(() => null)
 	server.close()
+	osc.close()
 })
 
 client.connect(cli.input[0], port).catch((e) => {
 	console.log(`Failed to connect`, e)
 })
 server.open(rest_port)
+osc.open(3333)
 
 async function updateEnvironmentFile(filePath: string, changes: Record<string, string>): Promise<void> {
 	const data = await fs.readFile(filePath, 'utf-8')
