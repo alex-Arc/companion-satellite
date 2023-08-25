@@ -7,18 +7,29 @@ import { DEFAULT_PORT } from './lib'
 import { RestServer } from './rest'
 import * as fs from 'fs/promises'
 
-const cli = meow(
-	`
-	Usage
-	  $ companion-satellite hostname [port] [REST port]
-
-	Examples
-	  $ companion-satellite 192.168.1.100
-	  $ companion-satellite 192.168.1.100 16622
-	  $ companion-satellite 192.168.1.100 16622 9999
-`,
-	{}
-)
+const cli = meow(``, {
+	flags: {
+		config: {
+			type: 'string',
+			shortflag: 'c',
+		},
+		target: {
+			type: 'string',
+			shortflag: 't',
+			default: '127.0.0.1',
+		},
+		port: {
+			type: 'number',
+			shortflag: 'p',
+			default: 16622,
+		},
+		rest: {
+			type: 'number',
+			shortflag: 'r',
+			default: 0,
+		},
+	},
+})
 
 if (cli.input.length === 0) {
 	cli.showHelp(0)
