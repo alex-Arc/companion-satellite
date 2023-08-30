@@ -1,50 +1,42 @@
-import { promises as fs } from 'fs'
-import { parse, stringify } from 'js-ini'
+import convict = require('convict')
+import * as fs from 'fs'
 
-export class Conifg {
-	private readonly defaultFilePath = './config/default.ini'
-	private readonly configFilePath = './config/user.ini'
+const config = convict({
+	companion: {
+		host: {
+			default: '127.0.0.1',
+		},
+		port: {
+			default: 16622,
+		},
+	},
+	companionBackup: {
+		host: {
+			default: '127.0.0.1',
+		},
+		port: {
+			default: 16622,
+		},
+	},
+	rest: {
+		port: {
+			default: 9999,
+		},
+	},
+})
 
-	public async read(): Promise<any> {
-		const config = parse(await fs.readFile(this.defaultFilePath, 'utf-8')) as any
-		await fs
-			.readFile(this.configFilePath, 'utf-8')
-			.catch((err) => {
-				console.log('unable to load user.ini returnning default', err)
-			})
-			.then((data) => {
-				if (data) {
-					const userConfig = parse(data) as any
-					for (const section in config) {
-						if (userConfig[section]) {
-							if (typeof config[section] === 'object') {
-								for (const key in config[section]) {
-									if (userConfig[section][key]) {
-										config[section][key] = userConfig[section][key]
-									}
-								}
-							} else {
-								config[section] = userConfig[section]
-							}
-						}
-					}
-				}
-			})
-
-		return config
+export function loadConig(): typeof config {
+	if (process.env.CONFIG) {
+		//TODO: dose this work
+		console.log('loading env CONFIG')
+		config.loadFile(process.env.CONFIG)
+	} else if (fs.existsSync('./config/user.json')) {
+		console.log('loading user CONFIG')
+		config.loadFile('./config/user.json')
 	}
+	return config
+}
 
-	async update(section: string, changes: Record<string, any>): Promise<void> {
-		const config = await this.read()
-		if (!config[section]) {
-			config[section] = {}
-		}
-		for (const key in changes) {
-			config[section][key] = changes[key]
-		}
-		const data = stringify(config)
-		fs.writeFile(this.configFilePath, data, 'utf-8').catch((err) => {
-			console.log('faild to write config file', err)
-		})
-	}
+export function saveConfig(conf: typeof config): void {
+	fs.writeFile('./config/user.json', conf.toString(), 'utf-8', (err) => console.log(err))
 }

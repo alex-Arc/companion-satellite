@@ -1,57 +1,13 @@
 import exitHook = require('exit-hook')
-import * as meow from 'meow'
 import { CompanionSatelliteClient } from './client'
 import { DeviceManager } from './devices'
-import { DEFAULT_PORT } from './lib'
 
 import { RestServer } from './rest'
-import * as fs from 'fs/promises'
 
-const cli = meow(``, {
-	flags: {
-		config: {
-			type: 'string',
-			shortflag: 'c',
-		},
-		target: {
-			type: 'string',
-			shortflag: 't',
-			default: '127.0.0.1',
-		},
-		port: {
-			type: 'number',
-			shortflag: 'p',
-			default: 16622,
-		},
-		rest: {
-			type: 'number',
-			shortflag: 'r',
-			default: 0,
-		},
-	},
-})
-
-if (cli.input.length === 0) {
-	cli.showHelp(0)
-}
-
-let port = DEFAULT_PORT
-let rest_port = 0
-if (cli.input.length > 1) {
-	port = Number(cli.input[1])
-	if (isNaN(port)) {
-		cli.showHelp(1)
-	}
-	if (cli.input.length > 2) {
-		rest_port = Number(cli.input[2])
-		if (isNaN(rest_port)) {
-			cli.showHelp(1)
-		}
-	}
-}
-
+import { loadConig, saveConfig } from './config'
 console.log('Starting')
 
+const config = loadConig()
 const client = new CompanionSatelliteClient({ debug: true })
 const devices = new DeviceManager(client)
 const server = new RestServer(client, devices)
@@ -59,15 +15,16 @@ const server = new RestServer(client, devices)
 client.on('log', (l) => console.log(l))
 client.on('error', (e) => console.error(e))
 
-const configFilePath = process.env.SATELLITE_CONFIG_PATH
-if (configFilePath) {
-	// Update the config file on changes, if a path is provided
-	client.on('ipChange', (newIP, newPort) => {
-		updateEnvironmentFile(configFilePath, { COMPANION_IP: newIP, COMPANION_PORT: String(newPort) }).catch((e) => {
-			console.log(`Failed to update config file:`, e)
-		})
-	})
-}
+client.connect(config.get('companion.host'), config.get('companion.port')).catch((e) => {
+	console.log(`Failed to connect`, e)
+})
+server.open(config.get('rest.port'))
+
+client.on('ipChange', (newIP, newPort) => {
+	config.set('companion.host', newIP)
+	config.set('companion.port', newPort)
+	saveConfig(config)
+})
 
 exitHook(() => {
 	console.log('Exiting')
@@ -75,24 +32,3 @@ exitHook(() => {
 	devices.close().catch(() => null)
 	server.close()
 })
-
-client.connect(cli.input[0], port).catch((e) => {
-	console.log(`Failed to connect`, e)
-})
-server.open(rest_port)
-
-async function updateEnvironmentFile(filePath: string, changes: Record<string, string>): Promise<void> {
-	const data = await fs.readFile(filePath, 'utf-8')
-
-	const lines = data.split(/\r?\n/)
-	for (let i = 0; i < lines.length; i++) {
-		for (const key in changes) {
-			if (lines[i].startsWith(key)) {
-				lines[i] = key + '=' + changes[key]
-			}
-		}
-	}
-
-	const newData = lines.join('\n')
-	await fs.writeFile(filePath, newData, 'utf-8')
-}

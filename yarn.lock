@@ -222,10 +222,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@julusian/image-rs@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@julusian/image-rs/-/image-rs-0.1.3.tgz#8b29042aa6c58788b583b480bfdb3dc3d73e92a5"
-  integrity sha512-RG5Q7va5ETbIJUu1YeI7fU1kkBQy19HllqOvhNax56Y2WP0nv5cfZpZT0xaZxjBZYokcoilkxZBfRRFGqxrg1Q==
+"@julusian/image-rs@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@julusian/image-rs/-/image-rs-0.2.0.tgz#5e23594827ed60d5d20feade30a79ab3936eac91"
+  integrity sha512-+KgEvVJ4nE3hWnleqnuHjtOXT5G0Rl5nSGYe2WvWZz091kJISkTk7wUih/fTVm2JA2nqIydra3fMQgEC7iTuYw==
 
 "@julusian/jpeg-turbo@^2.1.0":
   version "2.1.0"
@@ -518,6 +518,13 @@
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/@types/content-disposition/-/content-disposition-0.5.5.tgz#650820e95de346e1f84e30667d168c8fd25aa6e3"
   integrity sha512-v6LCdKfK6BwcqMo+wYW05rLS12S0ZO0Fl4w1h4aaZMD7bqT3gVUns6FvLJKGZHQmYn3SX55JWGpziwJRwVgutA==
+
+"@types/convict@^6.1.3":
+  version "6.1.3"
+  resolved "https://registry.yarnpkg.com/@types/convict/-/convict-6.1.3.tgz#9c0b191a5faa0099ebb8958801592ab1fa0e7b7f"
+  integrity sha512-EhQuiXh7HfY50l67Qx+A4KAa8mOAeNK4LRbVJQAaRGkyn6FX90N9z9Qq+TgBVm+8+Tk932RTXAD0KBkTmEhcdg==
+  dependencies:
+    "@types/node" "*"
 
 "@types/cookies@*":
   version "0.7.7"
@@ -1508,6 +1515,14 @@ content-type@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/content-type/-/content-type-1.0.5.tgz#8b773162656d1d1086784c8f23a54ce6d73d7918"
   integrity sha512-nTjqfcBFEipKdXCv4YDQWCfmcLZKm81ldF0pAopTvyrFGVbcR6P/VAAd5G7N+0tTr8QqiU0tFadD6FK4NtJwOA==
+
+convict@^6.2.4:
+  version "6.2.4"
+  resolved "https://registry.yarnpkg.com/convict/-/convict-6.2.4.tgz#be290672bf6397eec808d3b11fc5f71785b02a4b"
+  integrity sha512-qN60BAwdMVdofckX7AlohVJ2x9UvjTNoKVXCL2LxFk1l7757EJqf1nySdMkPQer0bt8kQ5lQiyZ9/2NvrFBuwQ==
+  dependencies:
+    lodash.clonedeep "^4.5.0"
+    yargs-parser "^20.2.7"
 
 cookies@~0.8.0:
   version "0.8.0"
@@ -2879,11 +2894,6 @@ jpeg-js@^0.4.2:
   resolved "https://registry.yarnpkg.com/jpeg-js/-/jpeg-js-0.4.4.tgz#a9f1c6f1f9f0fa80cdb3484ed9635054d28936aa"
   integrity sha512-WZzeDOEtTOBK4Mdsar0IqEU5sMr3vSV2RqkAIzUEV2BHnUfKGyswWFPFwK5EeDo93K3FohSHbLAjj0s1Wzd+dg==
 
-js-ini@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/js-ini/-/js-ini-1.6.0.tgz#8441d87c5422e1bedaf66ffc522a53cb2d25db69"
-  integrity sha512-9Vx+NVkMRNY4i7pLLIGdXIQbP1iwB3fP2IG1zMCgeUUvR1ODmTKa33eR/J9FHoorNsfoJr9/2SVqeSKLwPD9Nw==
-
 js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
@@ -3139,6 +3149,11 @@ locate-path@^7.1.0:
   integrity sha512-gvVijfZvn7R+2qyPX8mAuKcFGDf6Nc61GdvGafQsHL0sBIxfKzA+usWn4GFC/bk+QdwPUD4kWFJLhElipq+0VA==
   dependencies:
     p-locate "^6.0.0"
+
+lodash.clonedeep@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
+  integrity sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==
 
 lodash.isplainobject@^4.0.6:
   version "4.0.6"
@@ -4928,7 +4943,7 @@ yaml@2.3.1, yaml@^2.2.2:
   resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.3.1.tgz#02fe0975d23cd441242aa7204e09fc28ac2ac33b"
   integrity sha512-2eHWfjaoXgTBC2jNM1LRef62VQa0umtvRiDSk6HSzW7RvS5YtkabJrwYLLEKWBc8a5U2PTSCs+dJjUTJdlHsWQ==
 
-yargs-parser@^20.2.3:
+yargs-parser@^20.2.3, yargs-parser@^20.2.7:
   version "20.2.9"
   resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-20.2.9.tgz#2eb7dc3b0289718fc295f362753845c41a0c94ee"
   integrity sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w==

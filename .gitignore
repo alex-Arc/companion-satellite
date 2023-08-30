@@ -1,7 +1,6 @@
 node_modules
 *.log
 dist
-config.json
 electron-output
 .DS_STORE
-config/user.ini
+config/user.json
