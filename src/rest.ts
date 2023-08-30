@@ -6,16 +6,20 @@ import http = require('http')
 import type { CompanionSatelliteClient } from './client'
 import type { DeviceManager } from './devices'
 
+import { loadConfig } from './config'
+
 export class RestServer {
 	private readonly client: CompanionSatelliteClient
 	private readonly devices: DeviceManager
 	private readonly app: Koa
 	private readonly router: Router
+	private readonly config: any
 	private server: http.Server | undefined
 
 	constructor(client: CompanionSatelliteClient, devices: DeviceManager) {
 		this.client = client
 		this.devices = devices
+		this.config = loadConfig()
 
 		this.app = new Koa()
 		this.router = new Router()
@@ -28,14 +32,16 @@ export class RestServer {
 		})
 
 		//GET
-		this.router.get('/api/host', async (ctx) => {
-			ctx.body = this.client.host
-		})
-		this.router.get('/api/port', (ctx) => {
-			ctx.body = this.client.port
-		})
 		this.router.get('/api/config', (ctx) => {
-			ctx.body = { host: this.client.host, port: this.client.port }
+			ctx.body = this.config.toString()
+		})
+		this.router.get('/api/:p', async (ctx) => {
+			if (this.config.has(ctx.params.p)) {
+				ctx.body = this.config.get(ctx.params.p)
+			} else {
+				ctx.status = 400
+				ctx.body = 'Invalid parameter'
+			}
 		})
 
 		//POST
@@ -97,7 +103,6 @@ export class RestServer {
 
 		this.router.post('/api/rescan', async (ctx) => {
 			this.devices.scanDevices()
-
 			ctx.body = 'OK'
 		})
 

@@ -1,18 +1,17 @@
 import convict = require('convict')
 import * as fs from 'fs'
 
+let isLoaded = false
 const config = convict({
-	companion: {
-		host: {
-			format: String,
-			default: '127.0.0.1',
-			arg: 'host',
-		},
-		port: {
-			format: Number,
-			default: 16622,
-			arg: 'port',
-		},
+	host: {
+		format: String,
+		default: '127.0.0.1',
+		arg: 'host',
+	},
+	port: {
+		format: Number,
+		default: 16622,
+		arg: 'port',
 	},
 	rest: {
 		port: {
@@ -21,7 +20,7 @@ const config = convict({
 			arg: 'rest-port',
 		},
 	},
-	companionMain: {
+	main: {
 		host: {
 			format: String,
 			default: '127.0.0.1',
@@ -33,7 +32,7 @@ const config = convict({
 			arg: 'main-port',
 		},
 	},
-	companionBackup: {
+	backup: {
 		host: {
 			format: String,
 			default: '127.0.0.1',
@@ -52,7 +51,11 @@ const config = convict({
 	},
 })
 
-export function loadConig(): typeof config {
+export function loadConfig(): typeof config {
+	if (isLoaded) {
+		console.log('config allready loaded')
+		return config
+	}
 	if (process.env.CONFIG) {
 		//TODO: dose this work
 		console.log('loading env CONFIG')
@@ -61,6 +64,7 @@ export function loadConig(): typeof config {
 		console.log('loading user CONFIG')
 		config.loadFile('./config/user.json')
 	}
+	isLoaded = true
 	return config
 }
 
