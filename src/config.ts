@@ -62,7 +62,11 @@ export function loadConfig(): typeof config {
 		config.loadFile(process.env.CONFIG)
 	} else if (fs.existsSync('./config/user.json')) {
 		console.log('loading user CONFIG')
-		config.loadFile('./config/user.json')
+		try {
+			config.loadFile('./config/user.json')
+		} catch {
+			console.log('faild to load user CONFIG')
+		}
 	}
 	isLoaded = true
 	return config

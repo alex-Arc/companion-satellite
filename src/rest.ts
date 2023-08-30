@@ -63,6 +63,22 @@ export class RestServer {
 				ctx.body = 'Invalid host'
 			}
 		})
+		this.router.post('/api/host/:p', koaBody(), async (ctx) => {
+			let host = ''
+			if (ctx.request.type == 'application/json') {
+				host = ctx.request.body['host']
+			} else if (ctx.request.type == 'text/plain') {
+				host = ctx.request.body
+			}
+
+			if (host) {
+				this.config.set(ctx.params.p + '.host', host)
+				ctx.body = 'OK'
+			} else {
+				ctx.status = 400
+				ctx.body = 'Invalid host'
+			}
+		})
 		this.router.post('/api/port', koaBody(), async (ctx) => {
 			let newPort = NaN
 			if (ctx.request.type == 'application/json') {
@@ -75,6 +91,22 @@ export class RestServer {
 				this.client.connect(this.client.host, newPort).catch((e) => {
 					console.log('set port failed:', e)
 				})
+				ctx.body = 'OK'
+			} else {
+				ctx.status = 400
+				ctx.body = 'Invalid port'
+			}
+		})
+		this.router.post('/api/port/:p', koaBody(), async (ctx) => {
+			let newPort = NaN
+			if (ctx.request.type == 'application/json') {
+				newPort = Number(ctx.request.body['port'])
+			} else if (ctx.request.type == 'text/plain') {
+				newPort = Number(ctx.request.body)
+			}
+
+			if (!isNaN(newPort) && newPort > 0 && newPort <= 65535) {
+				this.config.set(ctx.params.p + '.port')
 				ctx.body = 'OK'
 			} else {
 				ctx.status = 400
