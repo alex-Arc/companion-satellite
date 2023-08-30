@@ -4,24 +4,51 @@ import * as fs from 'fs'
 const config = convict({
 	companion: {
 		host: {
+			format: String,
 			default: '127.0.0.1',
+			arg: 'host',
 		},
 		port: {
+			format: Number,
 			default: 16622,
-		},
-	},
-	companionBackup: {
-		host: {
-			default: '127.0.0.1',
-		},
-		port: {
-			default: 16622,
+			arg: 'port',
 		},
 	},
 	rest: {
 		port: {
+			format: Number,
 			default: 9999,
+			arg: 'rest-port',
 		},
+	},
+	companionMain: {
+		host: {
+			format: String,
+			default: '127.0.0.1',
+			arg: 'main-host',
+		},
+		port: {
+			format: Number,
+			default: 16622,
+			arg: 'main-port',
+		},
+	},
+	companionBackup: {
+		host: {
+			format: String,
+			default: '127.0.0.1',
+			arg: 'backup-host',
+		},
+		port: {
+			format: Number,
+			default: 16622,
+			arg: 'backup-port',
+		},
+	},
+	retryCount: {
+		format: Number,
+		default: 0, //0 to disable
+		arg: 'retryCount',
 	},
 })
 
@@ -38,5 +65,9 @@ export function loadConig(): typeof config {
 }
 
 export function saveConfig(conf: typeof config): void {
-	fs.writeFile('./config/user.json', conf.toString(), 'utf-8', (err) => console.log(err))
+	fs.writeFile('./config/user.json', conf.toString(), 'utf-8', (err) => {
+		if (err) {
+			console.log(err)
+		}
+	})
 }
