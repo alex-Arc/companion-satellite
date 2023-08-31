@@ -45,6 +45,20 @@ export class RestServer {
 		})
 
 		//POST
+		this.router.post('/api/switch', koaBody(), async (ctx) => {
+			if (ctx.request.type == 'text/plain') {
+				if (ctx.request.body == 'main') {
+					this.client.connect(this.config.get('main.host'), this.config.get('main.port')).catch(() => null)
+					ctx.body = 'OK'
+				} else if (ctx.request.body == 'backup') {
+					this.client
+						.connect(this.config.get('backup.host'), this.config.get('backup.port'))
+						.catch(() => null)
+					ctx.body = 'OK'
+				}
+			}
+		})
+
 		this.router.post('/api/host', koaBody(), async (ctx) => {
 			let host = ''
 			if (ctx.request.type == 'application/json') {
