@@ -10,7 +10,7 @@ if [ $(/usr/bin/id -u) -ne 0 ]; then
     exit 1
 fi
 
-SATELLITE_BRANCH="${SATELLITE_BRANCH:-master}"
+SATELLITE_BRANCH="${SATELLITE_BRANCH:-omnivox}"
 
 # add a system user
 adduser --disabled-password satellite --gecos ""
@@ -29,7 +29,7 @@ export PATH=/opt/fnm:$PATH
 eval "`fnm env --shell bash`"
 
 # clone the repository
-git clone https://github.com/bitfocus/companion-satellite.git -b $SATELLITE_BRANCH /usr/local/src/companion-satellite
+git clone https://github.com/alex-arc/companion-satellite.git -b $SATELLITE_BRANCH /usr/local/src/companion-satellite
 cd /usr/local/src/companion-satellite
 
 # configure git for future updates
