@@ -22,6 +22,9 @@ yarn
 # build typescript
 yarn build
 
+#create config folder
+mkdir -p config
+
 # update some tooling
 cp assets/linux/50-satellite.rules /etc/udev/rules.d/
 
