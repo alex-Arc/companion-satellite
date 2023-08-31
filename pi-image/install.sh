@@ -41,9 +41,6 @@ git config --global pull.rebase false
 # enable start on boot
 systemctl enable satellite
 
-# copy config file into place
-cp ./pi-image/satellite-config /boot/satellite-config
-
 # add the fnm node to this users path
 # TODO - verify permissions
 echo "export PATH=/opt/fnm/aliases/default/bin:\$PATH" >> /home/satellite/.bashrc

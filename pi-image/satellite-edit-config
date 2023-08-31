@@ -9,7 +9,7 @@ fi
 systemctl stop satellite
 
 # open config editor
-nano /boot/satellite-config
+nano /usr/local/src/companion-satellite/config/user.json
 
 # restart satellite
 # reboot
