@@ -9,13 +9,13 @@ const config = convict({
 		arg: 'host',
 	},
 	port: {
-		format: Number,
+		format: 'port',
 		default: 16622,
 		arg: 'port',
 	},
 	rest: {
 		port: {
-			format: Number,
+			format: 'port',
 			default: 9999,
 			arg: 'rest-port',
 		},
@@ -27,7 +27,7 @@ const config = convict({
 			arg: 'main-host',
 		},
 		port: {
-			format: Number,
+			format: 'port',
 			default: 16622,
 			arg: 'main-port',
 		},
@@ -39,7 +39,7 @@ const config = convict({
 			arg: 'backup-host',
 		},
 		port: {
-			format: Number,
+			format: 'port',
 			default: 16622,
 			arg: 'backup-port',
 		},
