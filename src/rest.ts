@@ -35,6 +35,9 @@ export class RestServer {
 		this.router.get('/api/config', (ctx) => {
 			ctx.body = this.config.toString()
 		})
+		this.router.get('/api/connected', (ctx) => {
+			ctx.body = this.client.connected
+		})
 		this.router.get('/api/:p', async (ctx) => {
 			if (this.config.has(ctx.params.p)) {
 				ctx.body = this.config.get(ctx.params.p)

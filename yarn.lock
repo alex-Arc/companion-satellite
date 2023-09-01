@@ -481,6 +481,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/async-exit-hook@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/async-exit-hook/-/async-exit-hook-2.0.0.tgz#162623f74b7018ec0da99a810d2284d697230837"
+  integrity sha512-RNjIyjnVZdcP5a1zeIPb5c0hq2nbJc/NOCLNKUAqeCw+J5z2zMcINISn9wybCWhczHnUu3VSUFy7ZCO6ir4ZRw==
+
 "@types/body-parser@*":
   version "1.19.2"
   resolved "https://registry.yarnpkg.com/@types/body-parser/-/body-parser-1.19.2.tgz#aea2059e28b7658639081347ac4fab3de166e6f0"
@@ -2781,6 +2786,11 @@ interpret@^1.0.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.4.0.tgz#665ab8bc4da27a774a40584e812e3e0fa45b1a1e"
   integrity sha512-agE4QfB2Lkp9uICn7BAqoscw4SZP9kTE2hxiFI3jBPmXJfdqiahTbUuKGsMoN2GtqL9AxhYioAcVvgsb1HvRbA==
+
+ip-assignment@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/ip-assignment/-/ip-assignment-1.0.3.tgz#43432ce809f7821937f6821016e469a250fe0025"
+  integrity sha512-dSVsCVuFz++KiCHK3kZM6sK8WOK7SwJ/b6cfiaI0AODJvrrgU4lLMGYeLW33SYxSxPfedrlAZT7XB9kyyf+r6w==
 
 is-arrayish@^0.2.1:
   version "0.2.1"
