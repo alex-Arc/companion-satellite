@@ -21,13 +21,11 @@
   "scripts": {
     "prepare": "husky install",
     "dev": "yarn ts-node src/main.ts",
-    "dev-electron": "yarn build:main && electron dist/electron.js",
     "build": "rimraf dist && yarn build:main",
     "build:main": "tsc -p tsconfig.build.json",
     "lint:raw": "eslint --ext .ts --ext .js --ext .tsx --ext .jsx --ignore-pattern dist",
     "lint": "yarn lint:raw .",
-    "license-validate": "yarn sofie-licensecheck",
-    "dist": "yarn build && zx tools/build_electron.mjs"
+    "license-validate": "yarn sofie-licensecheck"
   },
   "devDependencies": {
     "@sofie-automation/code-standard-preset": "~2.4.7",
@@ -74,62 +72,6 @@
     ],
     "*.{ts,tsx,js,jsx}": [
       "yarn lint --fix"
-    ]
-  },
-  "build": {
-    "productName": "Companion Satellite",
-    "appId": "remote.companion.bitfocus.no",
-    "afterSign": "tools/notarize.cjs",
-    "npmRebuild": false,
-    "directories": {
-      "buildResources": "assets/",
-      "output": "electron-output/"
-    },
-    "mac": {
-      "category": "no.bitfocus.companion.remote",
-      "target": "dmg",
-      "extendInfo": {
-        "LSBackgroundOnly": 1,
-        "LSUIElement": 1
-      },
-      "hardenedRuntime": "true",
-      "gatekeeperAssess": "false",
-      "entitlements": "entitlements.mac.plist",
-      "entitlementsInherit": "entitlements.mac.plist"
-    },
-    "dmg": {
-      "artifactName": "companion-satellite-${arch}.dmg",
-      "sign": true
-    },
-    "win": {
-      "target": "nsis"
-    },
-    "nsis": {
-      "createStartMenuShortcut": true,
-      "perMachine": true,
-      "oneClick": false,
-      "allowElevation": true,
-      "artifactName": "companion-satellite-x64.exe"
-    },
-    "linux": {
-      "target": "tar.gz",
-      "artifactName": "companion-satellite-${arch}.tar.gz",
-      "extraFiles": [
-        {
-          "from": "assets/linux",
-          "to": "."
-        }
-      ]
-    },
-    "files": [
-      "**/*",
-      "assets/*",
-      "!.nvmrc",
-      "!.node_version",
-      "!docs",
-      "!samples",
-      "!src",
-      "!tools"
     ]
   }
 }
