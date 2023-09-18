@@ -1,7 +1,6 @@
 import convict = require('convict')
 import * as fs from 'fs'
 
-let isLoaded = false
 const config = convict({
 	host: {
 		format: String,
@@ -51,11 +50,8 @@ const config = convict({
 	},
 })
 
+//TODO: loadConfig is called 2 times somehow
 export function loadConfig(): typeof config {
-	if (isLoaded) {
-		console.log('config allready loaded')
-		return config
-	}
 	if (process.env.CONFIG) {
 		//TODO: dose this work
 		console.log('loading env CONFIG')
@@ -68,7 +64,6 @@ export function loadConfig(): typeof config {
 			console.log('faild to load user CONFIG')
 		}
 	}
-	isLoaded = true
 	return config
 }
 
