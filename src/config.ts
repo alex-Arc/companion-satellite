@@ -1,7 +1,7 @@
 import convict = require('convict')
 import * as fs from 'fs'
 
-const config = convict({
+export const config = convict({
 	host: {
 		format: String,
 		default: '127.0.0.1',

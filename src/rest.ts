@@ -6,7 +6,7 @@ import http = require('http')
 import type { CompanionSatelliteClient } from './client'
 import type { DeviceManager } from './devices'
 
-import { loadConfig } from './config'
+import { config } from './config'
 
 export class RestServer {
 	private readonly client: CompanionSatelliteClient
@@ -19,7 +19,7 @@ export class RestServer {
 	constructor(client: CompanionSatelliteClient, devices: DeviceManager) {
 		this.client = client
 		this.devices = devices
-		this.config = loadConfig()
+		this.config = config
 
 		this.app = new Koa()
 		this.router = new Router()

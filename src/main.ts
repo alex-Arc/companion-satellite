@@ -20,8 +20,8 @@ client.connect(config.get('host'), config.get('port')).catch(() => null)
 server.open(config.get('rest.port'))
 
 client.on('ipChange', (newIP, newPort) => {
-	config.set('companion.host', newIP)
-	config.set('companion.port', newPort)
+	config.set('host', newIP)
+	config.set('port', newPort)
 	saveConfig(config)
 	connectErrorCount = 0
 })
